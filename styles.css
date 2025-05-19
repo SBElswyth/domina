@@ -1,0 +1,294 @@
+/*                _       _     _                          
+ /\   /\__ _ _ __(_) __ _| |__ | | ___  ___                
+ \ \ / / _` | '__| |/ _` | '_ \| |/ _ \/ __|               
+  \ V / (_| | |  | | (_| | |_) | |  __/\__ \               
+   \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/               
+                                                        */
+
+:root {
+  --br: 8px;            /*  Default border-radius */
+  --gap: 20px;          /*  Default gap */
+  --flex-gap: 6px 6px;  /*  Default flex gap */
+  --f-sm: 20px;         /*  Small font */
+  --f-md: 24px;         /*  Medium font */
+  --f-lg: 32px;         /*  Large font */
+}
+
+/* ___ _       _           _                               
+  / _ \ | ___ | |__   __ _| |                              
+ / /_\/ |/ _ \| '_ \ / _` | |                              
+/ /_\\| | (_) | |_) | (_| | |                              
+\____/|_|\___/|_.__/ \__,_|_|                              
+                                                        */
+
+body {
+  background-color: #002;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 800px;
+  max-width: 1280px;
+  display: grid;
+  grid-template-columns: 210px auto 210px 210px 210px;
+  grid-template-rows: auto 1fr 1fr;
+  grid-template-areas: 
+    "buttons buttons level draw release"
+    "deck hand hand hand discard"
+    "dominas dominas dominas info info";
+  column-gap: var(--gap);
+  row-gap: var(--gap);
+}
+body{
+  font-family: "Roboto Condensed", sans-serif;
+}
+h2, button {
+  font-family: "VT323", monospace;
+}
+
+h2 {
+  font-size: var(--f-lg);
+  margin: 0px 0px 8px 0px;
+  font-weight: 400;
+}
+button {
+  background-color: #9cc;
+  border: 1px solid #eee;
+  color: #222;
+  padding: 6px 16px 6px 16px;
+  text-align: center;
+  border-radius: var(--br);
+  font-size: var(--f-lg);
+}
+
+fieldset {
+  color: #222;
+  border: 2px solid #222;
+  border-radius: var(--br);
+  font-size: var(--f-sm);
+}
+fieldset legend {
+  padding: 0px 4px 0px 4px;
+}
+fieldset.light {
+  color: #ddd;
+  border: 2px solid #ddd;
+}
+fieldset p {
+  margin: 0px auto;
+  text-align: center;
+}
+
+/* __                         _                            
+  / /  __ _ _   _  ___  _   _| |_                          
+ / /  / _` | | | |/ _ \| | | | __|                         
+/ /__| (_| | |_| | (_) | |_| | |_                          
+\____/\__,_|\__, |\___/ \__,_|\__|                         
+            |___/                                        */
+
+.segment {
+  position: relative;
+  display: flex;
+  border: 2px solid #222;
+  justify-content: space-evenly;
+  border-radius: var(--br);
+  padding: 4px;
+  transition: all 0.8s ease-in-out;
+}
+#buttons {
+  display: flex;
+  align-items: center;
+  column-gap: var(--gap);
+  grid-area: buttons;
+}
+#buttons button {
+  background-color: #9cc;
+  border: 1px solid #eee;
+  color: #222;
+  padding: 6px 16px 6px 16px;
+  text-align: center;
+  border-radius: var(--br);
+  font-size: var(--f-lg);
+}
+#buttons button:hover {
+  background-color: #dd7;
+}
+#level {
+  background-color: #ccc;
+  grid-area: level;
+}
+#draw {
+  background-color: #ccc;
+  grid-area: draw;
+}
+#release {
+  background-color: #ccc;
+  grid-area: release;
+}
+#deck {
+  background-color: #292;
+  grid-area: deck;
+}
+#hand {
+  grid-area: hand;
+}
+#discard {
+  background-color: #292;
+  grid-area: discard;
+}
+#dominas {
+  background-color: #922;
+  grid-area: dominas;
+}
+#info {
+  padding: 8px;
+  background-color: #9cc;
+  grid-area: info;
+  display: block;
+}
+#info-heading {
+  text-align: center;
+}
+#info-info {
+  font-size: var(--f-sm);
+}
+#info-info p {
+  margin-bottom: 12px;
+}
+#info-info p.benefit {
+  font-style: italic;
+}
+
+.segment fieldset {
+  width: 100%;
+}
+
+/*                _       _                                
+  /\/\   ___   __| | __ _| |___                            
+ /    \ / _ \ / _` |/ _` | / __|                           
+/ /\/\ \ (_) | (_| | (_| | \__ \                           
+\/    \/\___/ \__,_|\__,_|_|___/                           
+                                                         */
+
+dialog {
+  min-width: 400px;
+  color: #222;
+  background-color: #ccc;
+  border-radius: var(--br);
+  overflow-y: hidden;
+  padding: 8px 8px 8px 8px;
+}
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+dialog button {
+  border: 1px solid #333;
+  font-size: var(--f-md);
+}
+.dialog-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--flex-gap);
+}
+
+#sentence {
+  display: flex;
+  gap: var(--flex-gap);
+  align-items: center;
+  font-size: var(--f-lg);
+  justify-content: center;
+}
+#difficulties {
+  display: flex;
+  gap: var(--gap);
+  font-size: var(--f-lg);
+}
+#difficulties .symbol {
+  font-size: 64px;
+  font-stretch: expanded;
+  margin: -0.2em 0em 0em 0em;
+}
+#diffculties .spades {
+  color: #102;
+}
+#difficulties .hearts {
+  color: #d02;
+}
+#difficulties .diamonds {
+  color: #b60;
+}
+#difficulties .clubs {
+  color: #0bc;
+}
+#difficulties .material-symbols-outlined {
+  font-size: var(--f-md);
+  margin: -8px 0px -8px 0px;
+}
+.difficulty {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 2px solid #222;
+  border-radius: var(--br);
+  padding: var(--gap);
+  background-color: #ddd;
+}
+
+/* ___                                             _       
+  / __\___  _ __ ___  _ __   ___  _ __   ___ _ __ | |_ ___ 
+ / /  / _ \| '_ ` _ \| '_ \ / _ \| '_ \ / _ \ '_ \| __/ __|
+/ /__| (_) | | | | | | |_) | (_) | | | |  __/ | | | |_\__ \
+\____/\___/|_| |_| |_| .__/ \___/|_| |_|\___|_| |_|\__|___/
+                     |_|                                 */
+
+.card {
+  border: 2px solid black;
+  border-radius: var(--br);
+  width: 140px;
+  height: 204px;
+  padding: 8px;
+  background-color: white;
+  transition: all 0.2s ease-in-out;
+}
+.card.selected {
+  border: 4px solid hotpink;
+  padding: 6px;
+}
+#hand .card {
+  position: relative;
+  transform: rotate(6deg);
+  margin-left: -55px;
+  margin-right: -55px;
+  margin-top: 20px;
+}
+#hand .card.selected {
+  margin-top: -20px;
+}
+#dominas .card {
+  margin-right: -110px;
+}
+
+.card-container {
+  display: flex;
+  gap: var(--gap);
+  justify-content: center;
+  align-items: center;
+}
+#opt-dominas {
+  justify-content: flex-start;
+}
+
+.card.empty {
+  border: 1px solid rgba(0,0,0,0);
+  background-color: rgba(0,0,0,0);
+}
+
+/*     _   _ _ _ _   _                                     
+ /\ /\| |_(_) (_) |_(_) ___  ___                           
+/ / \ \ __| | | | __| |/ _ \/ __|                          
+\ \_/ / |_| | | | |_| |  __/\__ \                          
+ \___/ \__|_|_|_|\__|_|\___||___/                          
+                                                         */
+
+img.preload {
+  display:none;
+}

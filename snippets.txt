@@ -1,0 +1,57 @@
+/*  BIG TO DO LIST
+	Major Tasks
+		Display info about Dominas
+		Card tasks and effects in choices dialog
+		Save/Load from Local Storage
+		Add tracking for meta-progress early
+		Implement benefits of Dominas
+
+	Minor Tasks
+		Style buttons
+		Hide Difficulties toggles
+		Implement sorting hand by rank or suit
+
+	Non-Programming Tasks
+		Create artwork for the 8 Dominas
+		Create a new card back
+*/
+
+/*******************\
+| Tucking Interface |
+| Elements          |
+\*******************/
+== HTML ==
+<div id="release" class="segment" onclick="game.interface.toggleTuckHUD()">
+== CSS ==
+#level.tucked {
+  transform: translate(420px, -10px);
+}
+#draw.tucked {
+  transform: translate(210px, -5px);
+}
+== JS ==
+this.toggleTuckHUD = function() {
+  this.levelSegment.classList.toggle('tucked');
+  this.drawSegment.classList.toggle('tucked');
+};
+
+
+
+/*   __                           _ _                      
+  /\ \ \___  _ __ _ __ ___   __ _| (_)_______              
+ /  \/ / _ \| '__| '_ ` _ \ / _` | | |_  / _ \             
+/ /\  / (_) | |  | | | | | | (_| | | |/ /  __/             
+\_\ \/ \___/|_|  |_| |_| |_|\__,_|_|_/___\___|             
+                                                        */
+/*                _       _     _                          
+ /\   /\__ _ _ __(_) __ _| |__ | | ___  ___                
+ \ \ / / _` | '__| |/ _` | '_ \| |/ _ \/ __|               
+  \ V / (_| | |  | | (_| | |_) | |  __/\__ \               
+   \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/               
+                                                        */
+/* ___                   __ _         _                    
+  / _ \__ _  __ _  ___  / _\ |_ _   _| | ___  ___          
+ / /_)/ _` |/ _` |/ _ \ \ \| __| | | | |/ _ \/ __|         
+/ ___/ (_| | (_| |  __/ _\ \ |_| |_| | |  __/\__ \         
+\/    \__,_|\__, |\___| \__/\__|\__, |_|\___||___/         
+            |___/               |___/                    */

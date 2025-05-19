@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Domina - The Chastity Game of the Year!</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<link rel="stylesheet" type="text/css" href="styles.css">
+
+		<script src="dayjs.min.js"></script>
+		<script src="domina.js" defer></script>
+	</head>
+	<body>
+		<dialog id="newGame">
+			<h2>New Game</h2>
+			<div class="dialog-container">
+				<div id="sentence">
+					<button onclick="game.interface.decreaseSentence()"><i class="fa fa-caret-left"></i></button>
+					<span><span id="newGame-sentence" class="sentence-value">-</span> days</span>
+					<button onclick="game.interface.increaseSentence()"><i class="fa fa-caret-right"></i></button>
+				</div>
+				<fieldset>
+					<legend>Difficulties</legend>
+					<div id="difficulties">
+						<div class="difficulty">
+							<span class="symbol spades">&spades;</span>
+							<button onclick="game.interface.increaseDifficulty(3)" disabled><i class="fa fa-caret-up"></i></button>
+							<span class="difficulty-value" id="difficulty-3">1</span>
+							<button onclick="game.interface.decreaseDifficulty(3)" disabled><i class="fa fa-caret-down"></i></button>
+						</div>
+						<div class="difficulty">
+							<span class="symbol hearts">&hearts;</span>
+							<button onclick="game.interface.increaseDifficulty(2)" disabled><i class="fa fa-caret-up"></i></button>
+							<span class="difficulty-value" id="difficulty-2">1</span>
+							<button onclick="game.interface.decreaseDifficulty(2)" disabled><i class="fa fa-caret-down"></i></button>
+						</div>
+						<div class="difficulty">
+							<span class="symbol diamonds">&diams;</span>
+							<button onclick="game.interface.increaseDifficulty(1)" disabled><i class="fa fa-caret-up"></i></button>
+							<span class="difficulty-value" id="difficulty-1">1</span>
+							<button onclick="game.interface.decreaseDifficulty(1)" disabled><i class="fa fa-caret-down"></i></button>
+						</div>
+						<div class="difficulty">
+							<span class="symbol clubs">&clubs;</span>
+							<button onclick="game.interface.increaseDifficulty(0)" disabled><i class="fa fa-caret-up"></i></button>
+							<span class="difficulty-value" id="difficulty-0">1</span>
+							<button onclick="game.interface.decreaseDifficulty(0)" disabled><i class="fa fa-caret-down"></i></button>
+						</div>
+					</div>
+				</fieldset>
+				<div>
+					<button onclick="game.interface.cancelNewGame()">Cancel</button>
+					<button onclick="game.newGame()" autofocus>Begin</button>
+				</div>
+			</div>
+		</dialog>
+		<dialog id="choices">
+			<h2>Select a Card</h2>
+			<div>
+				<fieldset>
+					<legend>Choices</legend>
+						<div id="choicesContainer" class="card-container">
+						</div>
+				</fieldset>
+				<h3 id="choices-heading"></h3>
+				<div id="choices-info"></div>
+				<button onclick="game.choose()" autofocus>Choose</button>
+			</div>
+		</dialog>
+		<dialog id="help">
+			<h2>Welcome to Domina</h2>
+			<p>This is a game of patience. Select your sentence, the time until you will be once again permitted orgasmic relief.</p>
+			<p>You aren't stuck in your frustration. Every three days you may draw a few cards from the deck, choose one to keep.<br />
+			<p>Make use of the cards to bring your release day closer. Every card comes with a task -- once the task is complete, you can play the card to claw a few days back.</p>
+			<p>Alternatively, collect sets of cards (Pairs, Straights, perhaps a Flush) to bring your destination closer still.<br />
+			<p>Powerful Dominas offer changes to the rules that will get you closer to your goal, if you're willing to hear their words.</p>
+			<button onclick="game.interface.hideHelp()" autofocus>Close</button>
+		</dialog>
+		<div id="buttons">
+			<button onclick="game.interface.displayNewGame()">New Game</button>
+			<button onclick="game.interface.displayHelp()">Help</button>
+			<button onclick="advanceDate()">Advance Date</button>
+		</div>
+		<div id="level" class="segment">
+			<fieldset>
+				<legend>Level</legend>
+				<p><span id="level-faceCardsDrawn">-</span> face cards drawn</p>
+				<p><span id="level-days">-</span> days at level <span id="level-level">-</span></p>
+			</fieldset>
+		</div>
+		<div id="draw" class="segment">
+			<fieldset>
+				<legend>Next Draw</legend>
+				<p><span id="draw-date">- ---</span><br />(<span id="draw-days">-- days</span>)</p>
+			</fieldset>
+		</div>
+		<div id="release" class="segment">
+			<fieldset>
+				<legend>Release Date</legend>
+				<p><span id="release-date">- ---</span><br />(<span id="release-days">-- days</span>)</p>
+			</fieldset>
+		</div>
+		<div id="deck" class="segment">
+			<fieldset class="light">
+				<legend>Deck <span id="deck-size">52/52</span></legend>
+				<div id="opt-deck" class="card-container">
+					<img class="card" src="png/back.png" onclick="game.drawChoices()" />
+				</div>
+			</fieldset>
+		</div>
+		<div id="hand" class="segment">
+			<div id="hand-container" class="card-container">
+			</div>
+		</div>
+		<div id="discard" class="segment">
+			<fieldset class="light">
+				<legend>Discard <span id="discard-size">0</span></legend>
+				<div id="discard-container" class="card-container">
+					<img class="card empty" src="png/blank.png" />
+				</div>
+			</fieldset>
+		</div>
+		<div id="dominas" class="segment">
+			<fieldset class="light">
+				<legend>Dominas</legend>
+				<div id="dominas-container" class="card-container">
+				</div>
+			</fieldset>
+		</div>
+		<div id="info" class="segment">
+			<h3 id="info-heading"></h3>
+			<div id="info-info"></div>
+		</div>
+	</body>
+</html>
