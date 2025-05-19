@@ -172,11 +172,9 @@ const DOMINAS = [
 ];
 
 var testDate = null;
-var testMode = true;
+var testMode = false;
 function advanceDate(days = 1) {
   testDate = testDate.add(days, 'day');
-  game.interface.updateDraw();
-  game.interface.updateRelease();
 };
 
 function Interface() {
@@ -866,9 +864,15 @@ function Game() {
     }
     return 0;
   };
+
+  this.update = function() {
+    console.log(game.getDate())
+    game.interface.updateDraw();
+    game.interface.updateRelease();
+  };
 };
 
 var game = new Game();
+var timer = setInterval(game.update, 5000);
 game.interface.displayNewGame();
 testDate = dayjs();
-console.log(testDate);
