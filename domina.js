@@ -8,107 +8,107 @@ const HAND_SIZE = 6;
 
 const TASKS = {
   'Clubs': {
-    0: ['Easy Task A', 'Easy Task B', 'Easy Task C'],
-    1: ['Normal Task A', 'Normal Task B', 'Normal Task B'],
-    2: ['Tricky Task A', 'Tricky Task B', 'Tricky Task B'],
+    0: ['Spank yourself once, hard enough to leave a handprint on your skin', 'Tweeze or pull out a dozen hairs from any one part of your body', 'Make yourself fully aroused, then take a cold shower'],
+    1: ['Complete any other task while wearing nipple clamps', 'Masturbate to the edge of orgasm using only your non-dominant hand', 'Massage an intimate spot on your body with an ice-cube'],
+    2: ['Groom your pubic hair - trim, shave and shape', 'Find and follow a guide to preparing for anal sex', 'Kneel on uncooked rice for at least 5 minutes'],
     3: ['Hard Task A', 'Hard Task B', 'Hard Task C'],
     4: ['Fiendish Task A', 'Fiendish Task B', 'Fiendish Task C'],
     'Jack': {
-      'text': 'Jack Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Squeeze and pinch your nipples for X minutes',
+      'base': 2,
+      'mult': 1
     },
     'Queen': {
-      'text': 'Queen Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Pour hot sauce on your palm, then masturbate for X minutes',
+      'base': 2,
+      'mult': 1
     },
     'King': {
-      'text': 'King Task X Text',
-      'base': 1,
+      'text': 'Strike yourself on the thighs with the ouchie stick X times',
+      'base': 5,
       'mult': 2
     },
     'Ace': {
-      'high': 'Ace High Task Text',
-      'low': 'Ace Low Task Text'
+      'high': 'Strike yourself on the balls with a wooden spoon 9 times',
+      'low': 'Strike yourself with a wooden spoon 9 times'
     }
   },
   'Diamonds': {
-    0: ['Easy Task A', 'Easy Task B', 'Easy Task C'],
-    1: ['Normal Task A', 'Normal Task B', 'Normal Task B'],
-    2: ['Tricky Task A', 'Tricky Task B', 'Tricky Task B'],
+    0: ['Publicaly post about completing any other task, explaining the game you\'re playing', 'Spend at least 20 minutes browsing and bookmarking new pornographic content', 'Purchase a gift worth at least $10 for someone else, for no particular reason'],
+    1: ['Complete any other task while naked and on your knees', 'Purchase a flattering outfit for yourself', 'Wake up early, then spend 15 minutes practicing three \'slave positions\''],
+    2: ['Buy a lipstick in a color new to you, that you find appealing', 'Produce a piece of erotica just for Mistress Elswyth - a story, an image, poem, etc.', 'Purchase a new sex toy for yourself'],
     3: ['Hard Task A', 'Hard Task B', 'Hard Task C'],
     4: ['Fiendish Task A', 'Fiendish Task B', 'Fiendish Task C'],
     'Jack': {
-      'text': 'Jack Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Write out the affirmation "I am grateful for chastity and denial" X times',
+      'base': 10,
+      'mult': 5
     },
     'Queen': {
-      'text': 'Queen Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Spend no less than X minutes in "Corner Time", considering ways you could have done better',
+      'base': 5,
+      'mult': 3
     },
     'King': {
-      'text': 'King Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Spend no less than $X in support of your favourite erotic content creators',
+      'base': 8,
+      'mult': 3
     },
     'Ace': {
-      'high': 'Ace High Task Text',
-      'low': 'Ace Low Task Text'
+      'high': 'Buy Mistress Elswyth something pretty',
+      'low': 'Buy Mistress Elswyth a coffee'
     }
   },
   'Hearts': {
-    0: ['Easy Task A', 'Easy Task B', 'Easy Task C'],
-    1: ['Normal Task A', 'Normal Task B', 'Normal Task B'],
-    2: ['Tricky Task A', 'Tricky Task B', 'Tricky Task B'],
+    0: ['Wear more makeup than usual (or any makeup at all) for at least six hours', 'Find a new piece of music appropriate for a romantic evening', 'Make yourself fully aroused, then measure your manhood'],
+    1: ['Complete any other task while wearing a butt plug', 'Wear only feminine underthings for a 24 hours period', 'Eat your next meal from a bowl on the floor, without using your hands'],
+    2: ['Spend a typical day dressed to impress in your very nicest clothes', 'Count (with tally marks) the number of times your mind turns to sexual thoughts throughout an entire day', 'Wear a gag (or stuff your mouth) for no less than an hour'],
     3: ['Hard Task A', 'Hard Task B', 'Hard Task C'],
     4: ['Fiendish Task A', 'Fiendish Task B', 'Fiendish Task C'],
     'Jack': {
-      'text': 'Jack Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Write a list of X reasons that you deserve chastity and teasing',
+      'base': 2,
+      'mult': 1
     },
     'Queen': {
-      'text': 'Queen Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Spend X minutes looking at yourself in the mirror while sucking and licking your own fingers',
+      'base': 4,
+      'mult': 1
     },
     'King': {
-      'text': 'King Task X Text',
-      'base': 1,
+      'text': 'Spend X minutes dry humping your pillow',
+      'base': 6,
       'mult': 2
     },
     'Ace': {
-      'high': 'Ace High Task Text',
-      'low': 'Ace Low Task Text'
+      'high': 'Wet yourself immediately after reading this task',
+      'low': 'Wet yourself while clothed'
     }
   },
   'Spades': {
-    0: ['Easy Task A', 'Easy Task B', 'Easy Task C'],
-    1: ['Normal Task A', 'Normal Task B', 'Normal Task B'],
-    2: ['Tricky Task A', 'Tricky Task B', 'Tricky Task B'],
+    0: ['Prepare a hot drink and sweet treat for someone else', 'Spend at least 10 minutes breathing mindfully while avoiding other distractions', 'Write a glowing review or comment on the last piece of media that made you cum'],
+    1: ['Write and share an account of how you performed any other task', 'Self-tie a "karada" rope harness', 'Practice being a table, chair, or footstool for no less than 10 minutes'],
+    2: ['Spend at least one hour working on writing your own erotic short story', 'Wear leather or metal cuffs and/or a collar to sleep', 'Choose something in your home and scrub it until it is as good as new'],
     3: ['Hard Task A', 'Hard Task B', 'Hard Task C'],
     4: ['Fiendish Task A', 'Fiendish Task B', 'Fiendish Task C'],
     'Jack': {
-      'text': 'Jack Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Put on some sexy or seduction music, then dance for X songs',
+      'base': 2,
+      'mult': 1
     },
     'Queen': {
-      'text': 'Queen Task X Text',
-      'base': 1,
+      'text': 'Adopt the Waitress pose for X minutes',
+      'base': 4,
       'mult': 2
     },
     'King': {
-      'text': 'King Task X Text',
-      'base': 1,
-      'mult': 2
+      'text': 'Spend X minutes on your knees, repeating appropriate mantras or affirmations',
+      'base': 3,
+      'mult': 3
     },
     'Ace': {
-      'high': 'Ace High Task Text',
-      'low': 'Ace Low Task Text'
+      'high': 'Deep clean your kitchen while wearing an approriate uniform',
+      'low': 'Deep clean your kitchen'
     }
   }
 };
@@ -476,7 +476,6 @@ function Interface() {
         cardElement.classList.add('selected');
         game.interface.choices_selected = cardElement.dataset.index;
         game.interface.showChoiceSelectionInfo();
-        //TODO: Need to put info on screen
       });
     }
     return cardElement;

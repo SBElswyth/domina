@@ -19,15 +19,7 @@
 
 ###	Major Tasks
 	
-* Add all the various tasks to the game
-
-  * 36 base tasks
-
-  * 24 for higher difficulties
-
-  * 12 face cards
-
-  * 4 aces
+* Add 24 for higher difficulties
 	
 * Display info about Dominas
 	
@@ -35,7 +27,7 @@
 	
 * Implement benefits of Dominas
 	
-* Make this work better on a smartphone screen.
+* Make this work better on a smartphone screen
 
 ###	Minor Tasks
 
