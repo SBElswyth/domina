@@ -292,6 +292,13 @@ function Interface() {
   this.updateDiscardSize = function(size) {
     this.discard_size.innerHTML = size;
   };
+  this.updateEverything = function(deckSize, discardSize) {
+    this.updateLevel();
+    this.updateDraw();
+    this.updateRelease();
+    this.updateDeckSize(deckSize);
+    this.updateDiscardSize(discardSize);
+  };
 
   this.getSelectedCardsInHand = function() {
     let selectedCards = [];
@@ -485,24 +492,26 @@ function Card(suit, rank) {
 };
 
 function Game() {
+  this.state = -1;
+
   //These properties relate to where cards actually are
-  this.deck;
-  this.choices;
-  this.hand;
-  this.dominas;
-  this.discardPile;
+  this.deck = [];
+  this.choices = [];
+  this.hand = [];
+  this.dominas = [];
+  this.discardPile = [];
 
   //These properies are based on New Game choices
-  this.level;
-  this.sentence;
+  this.level = 0;
+  this.sentence = 0;
 
   //These properties relate to dates
-  this.releaseDate;
-  this.drawDate;
+  this.releaseDate = dayjs();
+  this.drawDate = dayjs();
 
   //These properties relate to incremental modifiers
-  this.reduction;
-  this.faceCardsDrawn;
+  this.reduction = 0;
+  this.faceCardsDrawn = 0;
 
   //These properties relate to meta-progression
   this.longestSentence;
@@ -512,21 +521,33 @@ function Game() {
   this.interface = new Interface();
 
   this.init = function(date = this.getDate()) {
-    //TODO
-    //I suppose that this is where we would look for a saved game!
-    //But currently this resets the game state to a default.
-    this.deck = [];
-    this.choices = [];
-    this.hand = [];
-    this.dominas = [];
-    this.discardPile = [];
-
-    this.level = 0;
-    this.sentence = this.interface.newGameConfig.sentence;
-    this.releaseDate = date.startOf('day').add(this.sentence, 'day');
-    this.drawDate = date.startOf('day');
-    this.reduction = 0;
-    this.faceCardsDrawn = 0;
+    if (localStorage.getItem('state')) {
+      //There is some sort of saved data
+      try {
+        this.load();
+      } catch(err) {
+        this.state = 0;
+        this.longestSentence = 0;
+        this.maxDifficulty = [0, 0, 0, 0];
+        this.completedTasks = [0, 0, 0, 0];
+        this.save();
+        this.interface.displayNewGame();
+        return;
+      };
+      this.interface.updateEverything(this.deck.length, this.discardPile.length);
+      this.displayEverything();
+      this.interface.showHandSelectionInfo();
+      if (this.choices.length > 0) {
+        this.interface.displayChoices(this.choices);
+      }
+      return;
+    }
+    this.state = 0;
+    this.interface.displayNewGame();
+    this.longestSentence = 0;
+    this.maxDifficulty = [0, 0, 0, 0];
+    this.completedTasks = [0, 0, 0, 0];
+    this.save();
   };
   this.getDate = function() {
     if (testMode) {
@@ -537,7 +558,18 @@ function Game() {
   };
   this.newGame = function() {
     let date = this.getDate();
-    this.init(date);
+    this.state = 1;
+    this.deck = [];
+    this.choices = [];
+    this.hand = [];
+    this.dominas = [];
+    this.discardPile = [];
+    this.level = 0;
+    this.sentence = this.interface.newGameConfig.sentence;
+    this.releaseDate = date.startOf('day').add(this.sentence, 'day');
+    this.drawDate = date.startOf('day');
+    this.reduction = 0;
+    this.faceCardsDrawn = 0;
     //Create Playing Cards
     for (var Si = 0, Sl = SUITS.length; Si < Sl; Si++) {
       for (var Ri = 0, Rl = RANKS.length; Ri < Rl; Ri++) {
@@ -560,14 +592,9 @@ function Game() {
       this.discardPile.push(new Card(4, Di, true));
     }
     this.reshuffle();
-    //Prepare interface
-    this.interface.updateLevel();
-    this.interface.updateDraw();
-    this.interface.updateRelease();
-    this.interface.updateDeckSize(this.deck.length);
-    this.interface.updateDiscardSize(this.discardPile.length);
-    this.displayHand();
-    this.displayDiscardTop();
+    this.save();
+    this.interface.updateEverything(this.deck.length, this.discardPile.length);
+    this.displayEverything();
     this.interface.showHandSelectionInfo();
     this.interface.newGame_dialog.close();
   };
@@ -626,6 +653,7 @@ function Game() {
     while (this.choices.length > 0) {
       this.discardPile.push(this.choices.pop());
     }
+    this.save();
     this.interface.updateDiscardSize(this.discardPile.length);
     this.displayDiscardTop();
     this.interface.choices_dialog.close();
@@ -656,7 +684,6 @@ function Game() {
         this.discardPile[this.discardPile.length - 1]));
     }
   };
-
   this.displayDominas = function() {
     //this.dominas.sort(this.sortByRank);
     let dominasContainer = this.interface.dominas_container;
@@ -667,7 +694,12 @@ function Game() {
       let cardElement = this.interface.createCardElement(this.dominas[Di], Di, 'dominas');
       dominasContainer.appendChild(cardElement);
     }
-  }
+  };
+  this.displayEverything = function() {
+    this.displayHand();
+    this.displayDiscardTop();
+    this.displayDominas();
+  };
 
   this.sortByRank = function(a, b) {
     if (a.rank == b.rank) {
@@ -708,6 +740,7 @@ function Game() {
     let benefit = game.getTaskBenefit(event.target.dataset.high ? 13 : selectedCard.rank);
     game.releaseDate = game.releaseDate.subtract(benefit, 'day');
     game.reduction += benefit;
+    game.save();
     game.interface.updateRelease();
     game.interface.updateDiscardSize(game.discardPile.length);
     game.displayHand();
@@ -717,13 +750,10 @@ function Game() {
   this.playHand = function() {
     let selectedCards = game.interface.getSelectedCardsInHand();
     let rank = game.rankHand(selectedCards);
-    console.log(selectedCards);
-    console.log(rank + ': ' + HANDS[rank]);
     /*TODO: Validation - It should be impossible to trigger this with less than
       two cards selected. But we should ensure there are at least two cards
       selected, and that they represent a hand at least as good as a Pair!
     */
-    //TODO: Need to find all those cards in the hand variable and remove them
     for (var Si = 0, Sl = selectedCards.length; Si < Sl; Si++) {
       for (var Hi = 0, Hl = game.hand.length; Hi < Hl; Hi++) {
         if (game.hand[Hi].suit == selectedCards[Si].suit &&
@@ -736,6 +766,7 @@ function Game() {
     }
     game.releaseDate = game.releaseDate.subtract(REDUCTION[rank], 'day');
     game.reduction += REDUCTION[rank];
+    game.save();
     game.interface.updateRelease();
     game.interface.updateDiscardSize(game.discardPile.length);
     game.displayHand();
@@ -775,8 +806,9 @@ function Game() {
       }
       this.choices.push(this.deck.pop());
     }
-    this.interface.updateLevel();
     this.drawDate = date.add(DRAW_INTERVAL, 'day').startOf('day');
+    this.save();
+    this.interface.updateLevel();
     this.interface.updateDraw();
     this.interface.updateDeckSize(this.deck.length);
     this.interface.updateDiscardSize(this.discardPile.length);
@@ -865,14 +897,43 @@ function Game() {
     return 0;
   };
 
-  this.update = function() {
-    console.log(game.getDate())
-    game.interface.updateDraw();
-    game.interface.updateRelease();
+  this.save = function() {
+    localStorage.setItem('state', this.state);
+    localStorage.setItem('deck', JSON.stringify(this.deck));
+    localStorage.setItem('choices', JSON.stringify(this.choices));
+    localStorage.setItem('hand', JSON.stringify(this.hand));
+    localStorage.setItem('dominas', JSON.stringify(this.dominas));
+    localStorage.setItem('discardPile', JSON.stringify(this.discardPile));
+    localStorage.setItem('level', this.level);
+    localStorage.setItem('sentence', this.sentence);
+    localStorage.setItem('releaseDate', this.releaseDate.toJSON());
+    localStorage.setItem('drawDate', this.drawDate.toJSON());
+    localStorage.setItem('reduction', this.reduction);
+    localStorage.setItem('faceCardsDrawn', this.faceCardsDrawn);
+    localStorage.setItem('longestSentence', this.longestSentence);
+    localStorage.setItem('maxDifficulty', JSON.stringify(this.maxDifficulty));
+    localStorage.setItem('completedTasks', JSON.stringify(this.completedTasks));
+  };
+  this.load = function() {
+      this.state = parseInt(localStorage.getItem('state'));
+      this.deck = JSON.parse(localStorage.getItem('deck'));
+      this.choices = JSON.parse(localStorage.getItem('choices'));
+      this.hand = JSON.parse(localStorage.getItem('hand'));
+      this.dominas = JSON.parse(localStorage.getItem('dominas'));
+      this.discardPile = JSON.parse(localStorage.getItem('discardPile'));
+      this.level = parseInt(localStorage.getItem('level'));
+      this.sentence = parseInt(localStorage.getItem('sentence'));
+      this.releaseDate = dayjs(localStorage.getItem('releaseDate'));
+      this.drawDate = dayjs(localStorage.getItem('drawDate'));
+      this.reduction = parseInt(localStorage.getItem('reduction'));
+      this.faceCardsDrawn = parseInt(localStorage.getItem('faceCardsDrawn'));
+      this.longestSentence = parseInt(localStorage.getItem('longestSentence'));
+      this.maxDifficulty = JSON.parse(localStorage.getItem('maxDifficulty'));
+      this.completedTasks = JSON.parse(localStorage.getItem('completedTasks'));
   };
 };
 
 var game = new Game();
+game.init();
 var timer = setInterval(game.update, 5000);
-game.interface.displayNewGame();
 testDate = dayjs();

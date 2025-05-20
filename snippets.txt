@@ -1,21 +1,3 @@
-/*  BIG TO DO LIST
-	Major Tasks
-		Display info about Dominas
-		Card tasks and effects in choices dialog
-		Save/Load from Local Storage
-		Add tracking for meta-progress early
-		Implement benefits of Dominas
-
-	Minor Tasks
-		Style buttons
-		Hide Difficulties toggles
-		Implement sorting hand by rank or suit
-
-	Non-Programming Tasks
-		Create artwork for the 8 Dominas
-		Create a new card back
-*/
-
 /*******************\
 | Tucking Interface |
 | Elements          |

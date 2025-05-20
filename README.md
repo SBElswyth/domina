@@ -33,10 +33,6 @@
 	
 * Card tasks and effects in choices dialog box
 	
-* Save/Load from Local Storage
-	
-* Add tracking for meta-progress
-	
 * Implement benefits of Dominas
 	
 * Make this work better on a smartphone screen.
