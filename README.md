@@ -21,10 +21,6 @@
 	
 * Add 24 tasks for higher difficulties
 	
-* Implement benefits of Dominas
-
-* Add general warnings for invalid actions
-	
 * Make this work better on a smartphone screen
 
 ###	Minor Tasks

@@ -222,6 +222,10 @@ function Interface() {
 
   this.help_dialog = document.getElementById('help');
 
+  this.warning = document.getElementById('warning');
+  this.warning_text = document.getElementById('warning-text');
+  this.warningTimerIndex = null;
+
   this.displayHelp = function() {
     this.help_dialog.showModal();
   };
@@ -315,6 +319,20 @@ function Interface() {
         selectedCards.push(new Card(parseInt(card.dataset.suit), parseInt(card.dataset.rank)));
       }
     }
+  };
+
+  this.warn = function(warningText) {
+    window.clearTimeout(this.warningTimerIndex);
+    let text = document.createElement('p');
+    text.innerHTML = warningText;
+    while (this.warning.firstChild) {
+      this.warning.removeChild(this.warning.lastChild);
+    }
+    this.warning.appendChild(text);
+    this.warning.classList.add('visible');
+    this.warningTimerIndex = window.setTimeout(function() {
+      game.interface.warning.classList.remove('visible');
+    }, 2000);
   };
 
   this.clearInfo = function() {
@@ -478,8 +496,7 @@ function Interface() {
         if (cardElement.classList.contains('selected')) {
           cardElement.classList.remove('selected');
         } else if (game.interface.getSelectedCardsInHand().length == 5) {
-          //TODO: Need an error
-          console.log('Only 5 cards can be selected');
+          game.interface.warn('Only 5 cards can be selected');
           return;
         } else {
           cardElement.classList.add('selected');
@@ -836,19 +853,16 @@ function Game() {
   this.drawChoices = function() {
     let handSize = BASE_HAND_SIZE + (this.queryDomina(7) * 2)
     if (this.hand.length >= handSize) {
-      //TODO: Need a warning.
-      console.log("Hand is full.");
+      this.interface.warn("Hand is full");
       return;
     }
     if (this.choices.length > 0) {
-      //TODO: Need a warning.
-      console.log("Can't draw until after a choice is made.");
+      this.interface.warn("Can't draw until after a choice is made");
       return;
     }
     let date = this.getDate();
     if (date.isBefore(this.drawDate)) {
-      //TODO: Need a warning.
-      console.log("Too early to draw again.");
+      this.interface.warn("Too early to draw again");
       return;
     }
     let draws = BASE_DRAWS + this.queryDomina(6);
