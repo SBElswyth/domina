@@ -2,9 +2,9 @@ const SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
 const RANKS = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace'];
 const HANDS = ['High Card', 'Pair', 'Two Pair', 'Three of a Kind', 'Straight', 'Flush', 'Full House', 'Four of a Kind', 'Straight Flush'];
 const REDUCTION = [null, 4, 7, 10, 14, 18, 21, 24, null];
-const DRAWS = 2;
-const DRAW_INTERVAL = 3;
-const HAND_SIZE = 6;
+const BASE_DRAWS = 2;
+const BASE_DRAW_INTERVAL = 3;
+const BASE_HAND_SIZE = 6;
 
 const TASKS = {
   'Clubs': {
@@ -115,59 +115,59 @@ const TASKS = {
 const DOMINAS = [
   {
     'rank': 0,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Sensation',
+    'effect': '&clubs; Tasks reduce your sentence by one additional day',
+    'session': 'Medical Restraint Meditation Hypno Session',
+    'link': 'https://spokenbyelswyth.com/2024/06/06/medical-restraint-meditation-hypno-session/'
   },
   {
     'rank': 1,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Majesty',
+    'effect': '&diams; Tasks reduce your sentence by one additional day',
+    'session': 'Worship the Goddess - Foot Worship Session',
+    'link': 'https://spokenbyelswyth.com/2024/12/31/foot-worship-hypnosis-femdom-audio-trance-trigger-training/'
   },
   {
     'rank': 2,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Romance',
+    'effect': '&hearts; Tasks reduce your sentence by one additional day',
+    'session': 'Mistress Hypnotist Tricks the Pickup Artist',
+    'link': 'https://spokenbyelswyth.com/2023/06/21/4-80-mistress-hypnotist-tricks-the-pickup-artist/'
   },
   {
     'rank': 3,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Command',
+    'effect': '&spades; Tasks reduce your sentence by one additional day',
+    'session': '4 Ways to Become a Better Service Submissive',
+    'link': 'https://spokenbyelswyth.com/2024/07/17/4-ways-to-become-a-better-service-submissive-hypnotic-sissy-maid-training/'
   },
   {
     'rank': 4,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Generosity',
+    'effect': 'Played hands reduce your sentence by two additional days',
+    'session': 'Kneel By My Bed, Pet',
+    'link': 'https://spokenbyelswyth.com/2023/08/23/4-88-kneel-by-my-bed-pet/'
   },
   {
     'rank': 5,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Indulgence',
+    'effect': 'Reduce the wait between drawing cards by one day',
+    'session': 'Come Back to Me',
+    'link': 'https://spokenbyelswyth.com/2023/10/12/4-91-become-addicted-to-femdom-hypnosis/'
   },
   {
     'rank': 6,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Opportunity',
+    'effect': 'When drawing cards, draw an additional card',
+    'session': 'Walking to Seduction - The Dryad',
+    'link': 'https://spokenbyelswyth.com/2023/08/16/4-97-femdom-hypnosis-walking-to-seduction-dryad-immersive-hypnodomme-audio/'
   },
   {
     'rank': 7,
-    'name': 'Domina of Thing',
-    'effect': 'Reduces or Increases a Thing',
-    'session': 'Session Name',
-    'link': 'https://session.link.com/'
+    'name': 'Domina of Clarity',
+    'effect': 'Increase your hand size by two',
+    'session': 'Count, Sink, Crawl',
+    'link': 'https://spokenbyelswyth.com/2023/09/07/4-89-count-sink-crawl/'
   }
 ];
 
@@ -215,7 +215,7 @@ function Interface() {
   };
 
   this.choices_dialog = document.getElementById('choices');
-  this.choices_container = document.getElementById('choicesContainer');
+  this.choices_container = document.getElementById('choices-container');
   this.choices_heading = document.getElementById('choices-heading');
   this.choices_info = document.getElementById('choices-info');
   this.choices_selected = 0;
@@ -322,11 +322,11 @@ function Interface() {
       this.info_info.removeChild(this.info_info.firstChild);
     }
   };
-  this.getInfoLineElement = function(text, benefit = false) {
+  this.getInfoLineElement = function(text, addendum = false) {
     let line = document.createElement('p');
     line.innerHTML = text;
-    if (benefit) {
-      line.classList.add('benefit');
+    if (addendum) {
+      line.classList.add('addendum');
     }
     return line;
   };
@@ -341,6 +341,12 @@ function Interface() {
     let button = document.createElement('button');
     button.innerHTML = "Play Hand";
     button.addEventListener('click', game.playHand);
+    return button;
+  };
+  this.getInfoActivateButtonElement = function() {
+    let button = document.createElement('button');
+    button.innerHTML = "Entreat";
+    button.addEventListener('click', game.activateDomina);
     return button;
   };
 
@@ -364,20 +370,22 @@ function Interface() {
         aceContainer.style.display = 'flex';
         aceContainer.style.gap = '8px';
         let aceLow = document.createElement('div');
+        aceLow.style.flexGrow = '0';
         aceLow.appendChild(this.getInfoLineElement(game.getTaskText(card.suit, 12)));
-        aceLow.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(12) + " days", true));
+        aceLow.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(card.suit, 12) + " days", true));
         aceLow.appendChild(this.getInfoCompleteTaskButtonElement());
         aceContainer.append(aceLow);
         aceContainer.append(document.createElement('hr'));
         let aceHigh = document.createElement('div');
+        aceHigh.style.flexGrow = '0';
         aceHigh.appendChild(this.getInfoLineElement(game.getTaskText(card.suit, 13)));
-        aceHigh.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(13) + " days", true));
+        aceHigh.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(card.suit, 13) + " days", true));
         aceHigh.appendChild(this.getInfoCompleteTaskButtonElement(true));
         aceContainer.append(aceHigh);
         this.info_info.append(aceContainer);
       } else {
         this.info_info.appendChild(this.getInfoLineElement(game.getTaskText(card.suit, card.rank)));
-        this.info_info.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(card.rank) + " days", true));
+        this.info_info.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(card.suit, card.rank) + " days", true));
         this.info_info.appendChild(this.getInfoCompleteTaskButtonElement());
       }
       return;
@@ -392,7 +400,8 @@ function Interface() {
         //TODO: Add a button to confirm this...
         return;
       }
-      this.info_info.appendChild(this.getInfoLineElement("Reduce your sentence by " + REDUCTION[handRank] + " days", true));
+      let reduction = REDUCTION[handRank] + (game.queryDomina(4) * 2);
+      this.info_info.appendChild(this.getInfoLineElement("Reduce your sentence by " + reduction + " days", true));
       this.info_info.appendChild(this.getInfoPlayHandButtonElement());
 
     } else {
@@ -408,13 +417,16 @@ function Interface() {
     if (card.suit == 4) {
       this.choices_heading.innerHTML = DOMINAS[card.rank].name;
       this.choices_info.appendChild(this.getInfoLineElement(DOMINAS[card.rank].effect));
+      this.choices_info.appendChild(this.getInfoLineElement("Entreat her through the <a href=\"" + DOMINAS[card.rank].link + "\" target=\"_blank\">" + DOMINAS[card.rank].session + "</a> session", true));
     } else if (card.rank == 12) {
-      //This is an Ace
+      this.choices_heading.innerHTML = RANKS[12] + " of " + SUITS[card.suit];
+      this.choices_info.appendChild(this.getInfoLineElement(game.getTaskText(card.suit, 12) + ", or " + game.getTaskText(card.suit, 13)));
+      this.choices_info.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(card.suit, 12) + " or " + game.getTaskBenefit(card.suit, 13) + " days", true));
     } else {
       this.choices_heading.innerHTML = RANKS[card.rank] + " of " + SUITS[card.suit]
-      this.choices_info.appendChild(this.getInfoLineElement(game.getTaskText(card.suit, card.rank) + ', -' + game.getTaskBenefit(card.rank) + ' days'));
+      this.choices_info.appendChild(this.getInfoLineElement(game.getTaskText(card.suit, card.rank)));
+      this.choices_info.appendChild(this.getInfoLineElement("Reduce your sentence by " + game.getTaskBenefit(card.suit, card.rank) + " days", true));
     }
-
     this.choices_info.appendChild(this.getInfoLineElement("Remaining cards will be discarded", true));
   };
   this.showDominaSelectionInfo = function() {
@@ -422,17 +434,27 @@ function Interface() {
     let selectedCard = null;
     for (card of this.dominas_container.children) {
       if (card.classList.contains('selected')) {
-        selectedCard = new Card(card.dataset.suit, card.dataset.rank);
+        selectedCard = new Card(parseInt(card.dataset.suit), parseInt(card.dataset.rank));
         break;
       }
     }
-    if (card != null) {
-      this.info_heading.innerHTML = DOMINAS[card.rank].name;
-      this.info_info.appendChild(this.getInfoLineElement(DOMINAS[card.rank].effect));
+    if (selectedCard != null) {
+      this.info_heading.innerHTML = DOMINAS[selectedCard.rank].name;
+      this.info_info.appendChild(this.getInfoLineElement(DOMINAS[selectedCard.rank].effect));
+      if (game.queryDomina(selectedCard.rank)) {
+        this.info_info.appendChild(this.getInfoLineElement("This boon has been granted", true));
+      } else {
+        this.info_info.appendChild(this.getInfoLineElement("Entreat her through the <a href=\"" + DOMINAS[selectedCard.rank].link + "\" target=\"_blank\">" + DOMINAS[selectedCard.rank].session + "</a> session", true));
+        this.info_info.appendChild(this.getInfoActivateButtonElement());
+      }
     }
   };
 
   this.createCardElement = function(card = null, index = null, context = null) {
+    //TODO: There's no bones about it, this is eventually going to need some
+    //          sort of card container object to allow proper display of spread
+    //          out cards. This solution seems like a winner:
+    //          https://stackoverflow.com/a/78395043
     let cardElement = document.createElement('img');
     cardElement.classList.add('card');
     if (card == null) {
@@ -449,6 +471,10 @@ function Interface() {
     cardElement.dataset.index = index;
     if (context == 'hand') {
       cardElement.addEventListener('click', function() {
+        //Unselect cards in domina container
+        for (domina of game.interface.dominas_container.children) {
+          domina.classList.remove('selected');
+        }
         if (cardElement.classList.contains('selected')) {
           cardElement.classList.remove('selected');
         } else if (game.interface.getSelectedCardsInHand().length == 5) {
@@ -462,6 +488,10 @@ function Interface() {
       });
     } else if (context == 'dominas') {
       cardElement.addEventListener('click', function() {
+        //Unselect cards in hand container too
+        for (cardInHand of game.interface.hand_container.children) {
+          cardInHand.classList.remove('selected');
+        }
         for (domina of cardElement.parentElement.children) {
           domina.classList.remove('selected');
         }
@@ -588,7 +618,7 @@ function Game() {
     this.hand.sort(this.sortByRank);
     //Add Dominas to Deck
     for (var Di = 0, Dl = DOMINAS.length; Di < Dl; Di++) {
-      this.discardPile.push(new Card(4, Di, true));
+      this.discardPile.push(new Card(4, Di));
     }
     this.reshuffle();
     this.save();
@@ -623,19 +653,20 @@ function Game() {
       return TASKS[SUITS[suit]][0][rank];
     }
   };
-  this.getTaskBenefit = function(rank) {
+  this.getTaskBenefit = function(suit, rank) {
+    let dominaBonus = this.queryDomina(suit) ? 1 : 0;
     if (rank == 13) {
-      return 4;
+      return 4 + dominaBonus;
     } else if (rank == 12) {
-      return 1;
+      return 1 + dominaBonus;
     } else if (rank > 8) {
-      return 4;
+      return 4 + dominaBonus;
     } else if (rank > 5) {
-      return 3;
+      return 3 + dominaBonus;
     } else if (rank > 2) {
-      return 2;
+      return 2 + dominaBonus;
     } else {
-      return 1;
+      return 1 + dominaBonus;
     }
   }
 
@@ -736,7 +767,7 @@ function Game() {
     /*If we clicked the "High" button we need to spoof the rank to one
       higher than an ace
     */
-    let benefit = game.getTaskBenefit(event.target.dataset.high ? 13 : selectedCard.rank);
+    let benefit = game.getTaskBenefit(selectedCard.suit, event.target.dataset.high ? 13 : selectedCard.rank);
     game.releaseDate = game.releaseDate.subtract(benefit, 'day');
     game.reduction += benefit;
     game.save();
@@ -748,11 +779,13 @@ function Game() {
   };
   this.playHand = function() {
     let selectedCards = game.interface.getSelectedCardsInHand();
+    if (selectedCards.length < 2) {
+      return;
+    }
     let rank = game.rankHand(selectedCards);
-    /*TODO: Validation - It should be impossible to trigger this with less than
-      two cards selected. But we should ensure there are at least two cards
-      selected, and that they represent a hand at least as good as a Pair!
-    */
+    if (rank < 1) {
+      return;
+    }
     for (var Si = 0, Sl = selectedCards.length; Si < Sl; Si++) {
       for (var Hi = 0, Hl = game.hand.length; Hi < Hl; Hi++) {
         if (game.hand[Hi].suit == selectedCards[Si].suit &&
@@ -763,8 +796,9 @@ function Game() {
         }
       }
     }
-    game.releaseDate = game.releaseDate.subtract(REDUCTION[rank], 'day');
-    game.reduction += REDUCTION[rank];
+    let reduction = REDUCTION[rank] + (game.queryDomina(4) * 2);
+    game.releaseDate = game.releaseDate.subtract(reduction, 'day');
+    game.reduction += reduction;
     game.save();
     game.interface.updateRelease();
     game.interface.updateDiscardSize(game.discardPile.length);
@@ -772,13 +806,36 @@ function Game() {
     game.displayDiscardTop();
     game.interface.showHandSelectionInfo();
   };
+  this.activateDomina = function() {
+    let selectedDomina = null;
+    for (card of game.interface.dominas_container.children) {
+      if (card.classList.contains('selected')) {
+        selectedDomina = card;
+        break;
+      }
+    }
+    for (var Di = 0, Dl = game.dominas.length; Di < Dl; Di++) {
+      if (game.dominas[Di].rank == parseInt(selectedDomina.dataset.rank)) {
+        game.dominas[Di].active = true;
+        /*break;*/
+      }
+    }
+    game.interface.showDominaSelectionInfo();
+    game.save();
+  };
 
   this.queryDomina = function(rank) {
-
+    for (var Di = 0, Dl = this.dominas.length; Di < Dl; Di++) {
+      if (this.dominas[Di].rank == rank) {
+        return this.dominas[Di].active;
+      }
+    }
+    return false;
   };
 
   this.drawChoices = function() {
-    if (this.hand.length >= HAND_SIZE) {
+    let handSize = BASE_HAND_SIZE + (this.queryDomina(7) * 2)
+    if (this.hand.length >= handSize) {
       //TODO: Need a warning.
       console.log("Hand is full.");
       return;
@@ -794,7 +851,8 @@ function Game() {
       console.log("Too early to draw again.");
       return;
     }
-    for (var i = 0; i < DRAWS; i++) {
+    let draws = BASE_DRAWS + this.queryDomina(6);
+    for (var i = 0; i < draws; i++) {
       if (this.deck.length == 0) {
         this.reshuffle();
       }
@@ -805,7 +863,8 @@ function Game() {
       }
       this.choices.push(this.deck.pop());
     }
-    this.drawDate = date.add(DRAW_INTERVAL, 'day').startOf('day');
+    let drawInterval = BASE_DRAW_INTERVAL - this.queryDomina(5);
+    this.drawDate = date.add(drawInterval, 'day').startOf('day');
     this.save();
     this.interface.updateLevel();
     this.interface.updateDraw();

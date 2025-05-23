@@ -30,7 +30,7 @@ body {
   max-width: 1280px;
   display: grid;
   grid-template-columns: 210px auto 210px 210px 210px;
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: 108px 280px 280px;
   grid-template-areas: 
     "buttons buttons level draw release"
     "deck hand hand hand discard"
@@ -41,13 +41,18 @@ body {
 body{
   font-family: "Roboto Condensed", sans-serif;
 }
-h2, button {
+h2, h3, button {
   font-family: "VT323", monospace;
 }
 
 h2 {
   font-size: var(--f-lg);
   margin: 0px 0px 8px 0px;
+  font-weight: 400;
+}
+h3 {
+  font-size: var(--f-md);
+  margin: 8px 0px 8px 0px;
   font-weight: 400;
 }
 button {
@@ -76,6 +81,10 @@ fieldset.light {
 fieldset p {
   margin: 0px auto;
   text-align: center;
+}
+
+p.addendum {
+  font-style: italic;
 }
 
 /* __                         _                            
@@ -145,19 +154,21 @@ fieldset p {
   grid-area: info;
   display: block;
 }
+#info button {
+  font-size: var(--f-sm);
+}
 #info-heading {
   text-align: center;
 }
 #info-info {
+  background-color: rgba(255, 255, 255, 0.3);
   font-size: var(--f-sm);
+  height: 210px;
+  overflow-y: scroll;
 }
 #info-info p {
-  margin-bottom: 12px;
+  margin: 8px 4px 4px 4px;
 }
-#info-info p.benefit {
-  font-style: italic;
-}
-
 .segment fieldset {
   width: 100%;
 }
@@ -170,7 +181,7 @@ fieldset p {
                                                          */
 
 dialog {
-  min-width: 400px;
+  width: 480px;
   color: #222;
   background-color: #ccc;
   border-radius: var(--br);
@@ -205,7 +216,7 @@ dialog button {
 #difficulties .symbol {
   font-size: 64px;
   font-stretch: expanded;
-  margin: -0.2em 0em 0em 0em;
+  margin: 0px 0px 0px 0px;
 }
 #diffculties .spades {
   color: #102;
@@ -232,6 +243,17 @@ dialog button {
   padding: var(--gap);
   background-color: #ddd;
 }
+#choices-heading {
+
+}
+#choices-info {
+  background-color: rgba(255, 255, 255, 0.3);
+  height: 120px;
+  overflow-y: scroll;
+}
+#choices-info p {
+  margin: 8px 4px 4px 4px;
+}
 
 /* ___                                             _       
   / __\___  _ __ ___  _ __   ___  _ __   ___ _ __ | |_ ___ 
@@ -253,33 +275,40 @@ dialog button {
   border: 4px solid hotpink;
   padding: 6px;
 }
-#hand .card {
+.card.empty {
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.card-container {
+  display: flex;
+}
+#hand-container {
+  justify-content: center;
+  align-items: center;
+}
+#hand-container .card {
   position: relative;
   transform: rotate(6deg);
   margin-left: -55px;
   margin-right: -55px;
   margin-top: 20px;
 }
-#hand .card.selected {
+#hand-container .card.selected {
   margin-top: -20px;
 }
-#dominas .card {
-  margin-right: -110px;
-}
 
-.card-container {
-  display: flex;
-  gap: var(--gap);
-  justify-content: center;
-  align-items: center;
+#choices-container .card {
+  margin-right: -55px;
 }
-#opt-dominas {
-  justify-content: flex-start;
+#choices-container .card.selected {
+  z-index: 1;
 }
-
-.card.empty {
-  border: 1px solid rgba(0,0,0,0);
-  background-color: rgba(0,0,0,0);
+#dominas-container .card {
+  margin-right: -55px;
+}
+#dominas-container .card.selected {
+  z-index: 1;
 }
 
 /*     _   _ _ _ _   _                                     

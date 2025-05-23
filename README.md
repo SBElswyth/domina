@@ -19,31 +19,25 @@
 
 ###	Major Tasks
 	
-* Add 24 for higher difficulties
-	
-* Display info about Dominas
-	
-* Card tasks and effects in choices dialog box
+* Add 24 tasks for higher difficulties
 	
 * Implement benefits of Dominas
+
+* Add general warnings for invalid actions
 	
 * Make this work better on a smartphone screen
 
 ###	Minor Tasks
 
-* Display full info about aces in choices dialog box
-
 * Style buttons more consistently
 
 * Style dialogs with appropriate height and widths
-
-* Appropriate scrolling for dialog boxes where necessary
 
 * Hide Difficulties toggles when not unlocked
 
 * Implement sorting hand by rank or suit
 
-* Add a timer loop that updates the date every 5 minutes or so
+* Refactor cardElements to use a container div
 
 ###	Non-Programming Tasks
 
